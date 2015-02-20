@@ -10,14 +10,6 @@
     </fileset>
 
     <target name="test">
-        <phpcodesniffer
-                standard="PSR2"
-                format="full"
-                allowedFileExtensions="php"
-                haltonerror="true">
-            <fileset refid="php" />
-        </phpcodesniffer>
-
         <phpunit bootstrap="tests/bootstrap.php">
             <formatter type="plain" usefile="false"/>
             <batchtest>
@@ -28,5 +20,13 @@
         <phplint>
             <fileset refid="php" />
         </phplint>
+
+        <phpcodesniffer
+                standard="PSR2"
+                format="full"
+                allowedFileExtensions="php"
+                haltonerror="true">
+            <fileset refid="php" />
+        </phpcodesniffer>
     </target>
 </project>
