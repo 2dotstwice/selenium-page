@@ -11,8 +11,9 @@ namespace TwoDotsTwice\Selenium\Page;
  * Interface PageUrlInterface
  * @package TwoDotsTwice\Selenium\Page
  *
- * A page url should basically consist of a base url and a path, but in some
- * cases it may need to contain more info like scheme, port number, query, ...
+ * A page url should at least have an absolute url, but may in some cases also
+ * contain separate properties of methods for more detailed information about
+ * the scheme, domain name, query, ...
  */
 interface PageUrlInterface
 {
