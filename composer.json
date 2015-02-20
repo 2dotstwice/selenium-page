@@ -2,7 +2,7 @@
     "name": "2dotstwice/selenium-page",
     "autoload": {
       "psr-0": {
-        "Kanooh\\Selenium\\Page": ["src"]
+        "TwoDotsTwice\\Selenium\\Page": ["src"]
       }
     }
 }
