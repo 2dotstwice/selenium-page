@@ -11,10 +11,12 @@ namespace TwoDotsTwice\Selenium\Page;
  * Class PageUrl
  * @package TwoDotsTwice\Selenium\Page\PageUrl
  */
-class PageUrl implements PageUrlInterface
+abstract class PageUrl implements PageUrlInterface
 {
     /**
      * Base url.
+     *
+     * Should always end with a trailing slash.
      *
      * @var string
      */
@@ -23,33 +25,21 @@ class PageUrl implements PageUrlInterface
     /**
      * Path.
      *
+     * Should not start or end with a slash.
+     *
      * @var string
      */
     protected $path;
 
     /**
      * Constructs a new PageUrl object.
-     */
-    public function __construct($baseUrl, $path)
-    {
-        $this->setBaseUrl($baseUrl);
-        $this->setPath($path);
-    }
-
-    /**
-     * Sets the base url of the page.
      *
-     * @param string $baseUrl
-     *   Base url.
+     * @param string $path
+     *   Path of the page.
      */
-    public function setBaseUrl($baseUrl)
+    public function __construct($path)
     {
-        // Make sure the base url has a trailing slash.
-        if (substr($baseUrl, -1) !== '/') {
-            $baseUrl .= '/';
-        }
-
-        $this->baseUrl = $baseUrl;
+        $this->setPath($path);
     }
 
     /**
@@ -60,7 +50,12 @@ class PageUrl implements PageUrlInterface
      */
     public function getBaseUrl()
     {
-        return $this->baseUrl;
+        // Make sure the base url ends with a slash.
+        if (substr($this->baseUrl, -1) !== '/') {
+            return $this->baseUrl . '/';
+        } else {
+            return $this->baseUrl;
+        }
     }
 
     /**
@@ -69,7 +64,8 @@ class PageUrl implements PageUrlInterface
      * @param string $path
      *   Path.
      */
-    public function setPath($path) {
+    public function setPath($path)
+    {
         // Make sure the path does not start or end with a slash.
         $path = trim($path, '/');
         $this->path = $path;
@@ -94,4 +90,3 @@ class PageUrl implements PageUrlInterface
         return $this->getBaseUrl() . $this->getPath();
     }
 }
-

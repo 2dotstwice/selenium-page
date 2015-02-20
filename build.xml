@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Selenium Page" default="test">
+    <fileset id="php" dir=".">
+        <include name="**/*.php" />
+        <exclude name="vendor/" />
+    </fileset>
+
+    <fileset id="tests" dir="tests">
+        <include name="**/*Test*.php"/>
+    </fileset>
+
+    <target name="test">
+        <phpcodesniffer
+                standard="PSR2"
+                format="full"
+                allowedFileExtensions="php"
+                haltonerror="true">
+            <fileset refid="php" />
+        </phpcodesniffer>
+
+        <phpunit bootstrap="tests/bootstrap.php">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset refid="tests" />
+            </batchtest>
+        </phpunit>
+
+        <phplint>
+            <fileset refid="php" />
+        </phplint>
+    </target>
+</project>

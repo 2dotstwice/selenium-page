@@ -1,8 +1,14 @@
 {
-    "name": "2dotstwice/selenium-page",
-    "autoload": {
-      "psr-0": {
-        "TwoDotsTwice\\Selenium\\Page": ["src"]
-      }
+  "name": "2dotstwice/selenium-page",
+  "autoload": {
+    "psr-4": {
+      "TwoDotsTwice\\Selenium\\": ["src", "tests"]
     }
+  },
+  "require-dev": {
+    "phing/phing": "~2.10",
+    "phpunit/phpunit-selenium": "dev-master",
+    "sauce/sausage": ">=0.9.1",
+    "squizlabs/php_codesniffer": "~2.2"
+  }
 }

@@ -1,0 +1,18 @@
+language: php
+php:
+- 5.5
+- 5.6
+install: composer install
+env:
+  global:
+  - secure: QVhDZF9UiqhqwaaEkMMKJG2yAe+NRbvOCXUM5+XL6tW88JisfAJnJ0eXNyp9+47nAdPr7Wz8BY3VM03AjAm/tR2TyxNIzo6SjQtLzhwpp0gEPaRfGyud+js2SxrOTR0r0/BISwsFO1FNhyc3MgWqGQ2xuClYO7ikxDZHSh0YsrA=
+  - secure: ZJJz/v4WTkPHbroCtDqAw3qhwogC3hWGUSwLwOenfW/kdpEQA6IwEiv+QyNtDuhsJ+54WtANbfzl8C05WbO6kqEK46fJci5PkvvTu3WpQemRTOhpJdq14P6AoCHuxzTWS2FMq6of3IxyoTjRn76G8MA8a73U/0I7v4mE+yGV9rs=
+script:
+- ./vendor/bin/phing test
+notifications:
+  email:
+    recipients:
+    - bert@2dotstwice.be
+  hipchat:
+    rooms:
+      secure: PHFM1l1L8EZ/Bw9NTNWFjyCvoP/hRdDskX4vK9wYCwlQLAHYBdqX8RcNkdBWHQG1Be4goq8wV1yh9sXs3GN1I3pY5MQyQxPgZgV9DmMZOZC+ByVr73KTcC9kznPzAKpCZRcYqTGTlYh2JctBoVBN2nGwoQ0YmvwlIHIYOXz3vxY=
