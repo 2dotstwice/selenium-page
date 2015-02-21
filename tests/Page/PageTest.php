@@ -7,8 +7,6 @@
 
 namespace TwoDotsTwice\Selenium\Tests\Page;
 
-use Sauce\Sausage\WebDriverTestCase;
-
 use TwoDotsTwice\Selenium\Tests\Page\GitHub\BlogPage;
 use TwoDotsTwice\Selenium\Tests\Page\GitHub\RepositoryPage;
 
@@ -16,30 +14,8 @@ use TwoDotsTwice\Selenium\Tests\Page\GitHub\RepositoryPage;
  * Class PageTest
  * @package TwoDotsTwice\Selenium\Tests\Page
  */
-class PageTest extends WebDriverTestCase
+class PageTest extends PageTestCase
 {
-    /**
-     * Browser info for SauceLabs.
-     *
-     * @var array
-     */
-    public static $browsers = array(
-        array(
-            'browserName' => 'firefox',
-            'local' => true,
-            'desiredCapabilities' => array(
-                'version' => 'local',
-            ),
-        ),
-    );
-
-    /**
-     * Default timeout for this test.
-     *
-     * @var int
-     */
-    protected $timeout = 30000;
-
     /**
      * Tests the Page and PageUrl classes.
      */
@@ -48,11 +24,11 @@ class PageTest extends WebDriverTestCase
         // Go to a page with a fixed path.
         $blogPage = new BlogPage($this);
         $blogPage->go();
-        $blogPage->waitUntilLoaded($this->timeout);
+        $this->assertPageArrival($blogPage, $this->timeout);
 
         // Reload the page with a fixed path.
         $blogPage->reload();
-        $blogPage->waitUntilLoaded($this->timeout);
+        $this->assertPageArrival($blogPage, $this->timeout);
     }
 
     /**
@@ -66,10 +42,10 @@ class PageTest extends WebDriverTestCase
             '%account' => '2dotstwice',
             '%repository' => 'selenium-page',
         ));
-        $repositoryPage->waitUntilLoaded($this->timeout);
+        $this->assertPageArrival($repositoryPage, $this->timeout);
 
         // Reload the page with a dynamic path.
         $repositoryPage->reload();
-        $repositoryPage->waitUntilLoaded($this->timeout);
+        $this->assertPageArrival($repositoryPage, $this->timeout);
     }
 }

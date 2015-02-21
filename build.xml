@@ -6,7 +6,7 @@
     </fileset>
 
     <fileset id="tests" dir="tests">
-        <include name="**/*Test*.php"/>
+        <include name="**/*Test.php"/>
     </fileset>
 
     <target name="test">

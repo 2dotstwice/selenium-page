@@ -122,6 +122,23 @@ abstract class PageUrl
     }
 
     /**
+     * Returns a specific path argument, based on the placeholder's name.
+     *
+     * @param string $placeholder
+     *   Placeholder name for the argument.
+     *
+     * @return string|bool
+     *   Path argument, or false if the argument is not set.
+     */
+    public function getPathArgument($placeholder)
+    {
+        if (!empty($this->pathArguments[$placeholder])) {
+            return $this->pathArguments[$placeholder];
+        }
+        return false;
+    }
+
+    /**
      * Returns the path, in which any placeholders are replaced with the corresponding arguments.
      *
      * @return string
@@ -134,6 +151,70 @@ abstract class PageUrl
             $path = str_replace($placeholder, $argument, $path);
         }
         return $path;
+    }
+
+    /**
+     * Checks that a given path matches the path of this url.
+     *
+     * @param string $path
+     *   Path to check.
+     * @param bool $checkArguments
+     *   If true the arguments will also be compared. Defaults to false.
+     *
+     * @return bool
+     *   True if the path matches, false otherwise.
+     */
+    public function checkPath($path, $checkLength = true, $checkArguments = false)
+    {
+        // Trim the path of any slashes at the start or end.
+        $path = trim($path, '/');
+
+        // Get arrays of individual path components.
+        $actualPathComponents = explode('/', $path);
+        $expectedPathComponents = explode('/', $this->getPath());
+
+        // If the expected path is longer than the actual path we need to check, the paths don't match.
+        if (count($expectedPathComponents) > count($actualPathComponents)) {
+            return false;
+        }
+
+        // If the actual path we need to check is longer than the expected path, the path's don't match unless
+        // explicitly allowed.
+        if (count($expectedPathComponents) < count($actualPathComponents) && $checkLength) {
+            return false;
+        }
+
+        // Loop over each component of the expected path.
+        foreach ($expectedPathComponents as $index => $expectedPathComponent) {
+            // Get the corresponding component from the path we have to check.
+            $actualPathComponent = $actualPathComponents[$index];
+
+            // Determine whether it's a placeholder or not.
+            $isPlaceholder = (substr($expectedPathComponent, 0, 1) == '%');
+
+            // If it's a placeholder, check if an argument has been set.
+            $argument = $this->getPathArgument($expectedPathComponent);
+
+            // If no argument has been set, it may be possible that the placeholder is not actually a placeholder but
+            // just a part of the path that starts with a % by coincidence.
+            if ($argument === false) {
+                $isPlaceholder = false;
+            }
+
+            // If it's a placeholder, and we have to check the arguments as well, and the arguments don't match, the
+            // paths don't match.
+            if ($isPlaceholder && $checkArguments && $argument != $actualPathComponent) {
+                return false;
+            }
+
+            // If it's not a placeholder, simply compare both components. If they don't match, the paths don't match.
+            if (!$isPlaceholder && $actualPathComponent != $expectedPathComponent) {
+                return false;
+            }
+        }
+
+        // If no checks have failed until now, the paths match.
+        return true;
     }
 
     /**

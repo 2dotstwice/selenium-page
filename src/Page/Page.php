@@ -53,6 +53,48 @@ abstract class Page
     }
 
     /**
+     * Returns the url of the page.
+     *
+     * @return PageUrl
+     *   Url of the page.
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Returns the body element of the page.
+     *
+     * @return Element
+     *   Body element on the page.
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Attempts to find the body element of the page.
+     *
+     * If found, it will update the body property of this class.
+     *
+     * @param Element|null
+     *   Body element of the page, or null if not found.
+     */
+    public function findBody()
+    {
+        $criteria = $this->testCase->using('xpath')->value('//body');
+        $body = Element::find($this->testCase, $criteria);
+
+        if (!is_null($body)) {
+            $this->body = $body;
+        }
+
+        return $body;
+    }
+
+    /**
      * Navigates to the page.
      *
      * @param array $arguments
@@ -70,48 +112,5 @@ abstract class Page
     public function reload()
     {
         $this->go($this->url->getPathArguments());
-    }
-
-    /**
-     * Waits until the page is loaded.
-     *
-     * @param int $timeout
-     *   Maximum time to wait for the old body to go stale or the new body to load, in milliseconds.
-     */
-    public function waitUntilLoaded($timeout)
-    {
-        // Check if the body has been set before, which would indicate the page has been loaded before.
-        if (!empty($this->body)) {
-            $body = $this->body;
-
-            // Wait until clicking the old body element throws an exception, which indicates that it's no longer present
-            // on the page.
-            $this->testCase->waitUntil(function () use ($body) {
-                try {
-                    $body->click();
-                    return null;
-                } catch (\PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
-                    return true;
-                }
-            }, $timeout);
-        }
-
-        // Wait until the new body element is present and store it in case the page is reloaded in the future.
-        $testCase = $this->testCase;
-        $this->body = $this->testCase->waitUntil(function () use ($testCase) {
-            $criteria = $testCase->using('xpath')->value('//body');
-            return Element::find($testCase, $criteria);
-        }, $timeout);
-    }
-
-    /**
-     * Returns the body element on the page.
-     *
-     * @return Element
-     *   Body element on the page.
-     */
-    public function getBody()
-    {
-        return $this->body;
     }
 }
