@@ -34,48 +34,42 @@ class PageTest extends WebDriverTestCase
     );
 
     /**
-     * GitHub blog page.
+     * Default timeout for this test.
      *
-     * @var BlogPage
+     * @var int
      */
-    protected $blogPage;
-
-    /**
-     * GitHub repository page.
-     *
-     * @var RepositoryPage
-     */
-    protected $repositoryPage;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUpPage()
-    {
-        $this->blogPage = new BlogPage($this);
-        $this->repositoryPage = new RepositoryPage($this);
-    }
+    protected $timeout = 30000;
 
     /**
      * Tests the Page and PageUrl classes.
      */
     public function testPageNavigation()
     {
-        $timeout = 30000;
-
         // Go to a page with a fixed path.
-        $this->blogPage->go();
-        $this->blogPage->waitUntilLoaded($timeout);
+        $blogPage = new BlogPage($this);
+        $blogPage->go();
+        $blogPage->waitUntilLoaded($this->timeout);
 
         // Reload the page with a fixed path.
-        $this->blogPage->reload();
-        $this->blogPage->waitUntilLoaded($timeout);
+        $blogPage->reload();
+        $blogPage->waitUntilLoaded($this->timeout);
+    }
 
+    /**
+     * Tests the path arguments for pages with dynamic paths.
+     */
+    public function testPathArguments()
+    {
         // Go to a page with a dynamic path.
-        $this->repositoryPage->go(array(
+        $repositoryPage = new RepositoryPage($this);
+        $repositoryPage->go(array(
             '%account' => '2dotstwice',
             '%repository' => 'selenium-page',
         ));
-        $this->repositoryPage->waitUntilLoaded($timeout);
+        $repositoryPage->waitUntilLoaded($this->timeout);
+
+        // Reload the page with a dynamic path.
+        $repositoryPage->reload();
+        $repositoryPage->waitUntilLoaded($this->timeout);
     }
 }
