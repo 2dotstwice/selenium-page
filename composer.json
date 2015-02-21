@@ -2,7 +2,8 @@
   "name": "2dotstwice/selenium-page",
   "autoload": {
     "psr-4": {
-      "TwoDotsTwice\\Selenium\\": ["src", "tests"]
+      "TwoDotsTwice\\Selenium\\": ["src"],
+      "TwoDotsTwice\\Selenium\\Tests\\": ["tests"]
     }
   },
   "require-dev": {

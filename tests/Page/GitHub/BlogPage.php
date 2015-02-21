@@ -2,14 +2,14 @@
 
 /**
  * @file
- * Contains \TwoDotsTwice\Selenium\Page\GitHub\BlogPage.
+ * Contains \TwoDotsTwice\Selenium\Tests\Page\GitHub\BlogPage.
  */
 
-namespace TwoDotsTwice\Selenium\Page\GitHub;
+namespace TwoDotsTwice\Selenium\Tests\Page\GitHub;
 
 /**
  * Class BlogPage
- * @package TwoDotsTwice\Selenium\Page\GitHub
+ * @package TwoDotsTwice\Selenium\Tests\Page\GitHub
  */
 class BlogPage extends GitHubPage
 {

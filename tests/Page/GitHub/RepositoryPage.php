@@ -2,14 +2,14 @@
 
 /**
  * @file
- * Contains \TwoDotsTwice\Selenium\Page\GitHub\RepositoryPage.
+ * Contains \TwoDotsTwice\Selenium\Tests\Page\GitHub\RepositoryPage.
  */
 
-namespace TwoDotsTwice\Selenium\Page\GitHub;
+namespace TwoDotsTwice\Selenium\Tests\Page\GitHub;
 
 /**
  * Class RepositoryPage
- * @package TwoDotsTwice\Selenium\Page\GitHub
+ * @package TwoDotsTwice\Selenium\Tests\Page\GitHub
  */
 class RepositoryPage extends GitHubPage
 {

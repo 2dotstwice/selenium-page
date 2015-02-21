@@ -2,19 +2,19 @@
 
 /**
  * @file
- * Contains \TwoDotsTwice\Selenium\Page\PageTest.php
+ * Contains \TwoDotsTwice\Selenium\Tests\Page\PageTest.php
  */
 
-namespace TwoDotsTwice\Selenium\Page;
+namespace TwoDotsTwice\Selenium\Tests\Page;
 
 use Sauce\Sausage\WebDriverTestCase;
 
-use TwoDotsTwice\Selenium\Page\GitHub\BlogPage;
-use TwoDotsTwice\Selenium\Page\GitHub\RepositoryPage;
+use TwoDotsTwice\Selenium\Tests\Page\GitHub\BlogPage;
+use TwoDotsTwice\Selenium\Tests\Page\GitHub\RepositoryPage;
 
 /**
  * Class PageTest
- * @package TwoDotsTwice\Selenium\Page
+ * @package TwoDotsTwice\Selenium\Tests\Page
  */
 class PageTest extends WebDriverTestCase
 {
@@ -25,10 +25,10 @@ class PageTest extends WebDriverTestCase
      */
     public static $browsers = array(
         array(
-            'browserName' => 'Firefox',
+            'browserName' => 'firefox',
+            'local' => true,
             'desiredCapabilities' => array(
-                'platform' => 'Windows 7',
-                'version' => 32,
+                'version' => 'local',
             ),
         ),
     );

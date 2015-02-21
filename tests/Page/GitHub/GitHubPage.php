@@ -2,16 +2,16 @@
 
 /**
  * @file
- * Contains \TwoDotsTwice\Selenium\Page\GitHub\GitHubPage.
+ * Contains \TwoDotsTwice\Selenium\Tests\Page\GitHub\GitHubPage.
  */
 
-namespace TwoDotsTwice\Selenium\Page\GitHub;
+namespace TwoDotsTwice\Selenium\Tests\Page\GitHub;
 
 use TwoDotsTwice\Selenium\Page\Page;
 
 /**
  * Class GitHubPage
- * @package TwoDotsTwice\Selenium\Page\GitHub
+ * @package TwoDotsTwice\Selenium\Tests\Page\GitHub
  */
 abstract class GitHubPage extends Page
 {
