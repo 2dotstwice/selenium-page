@@ -9,6 +9,9 @@ namespace TwoDotsTwice\Selenium\Page;
 
 /**
  * Class PageTestCaseTrait
+ *
+ * Should only be used on \PHPUnit_Extensions_Selenium2TestCase classes.
+ *
  * @package TwoDotsTwice\Selenium\Page
  */
 trait PageTestCaseTrait
