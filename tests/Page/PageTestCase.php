@@ -8,7 +8,7 @@
 namespace TwoDotsTwice\Selenium\Tests\Page;
 
 use Sauce\Sausage\WebDriverTestCase;
-use TwoDotsTwice\Selenium\Page\PageTestCaseTrait;
+use TwoDotsTwice\Selenium\Page\PageTestCase as PageTestCaseTrait;
 
 /**
  * Class PageTestCase

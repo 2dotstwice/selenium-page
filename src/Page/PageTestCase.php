@@ -2,19 +2,19 @@
 
 /**
  * @file
- * Contains \TwoDotsTwice\Selenium\Page\PageTestCaseTrait.
+ * Contains \TwoDotsTwice\Selenium\Page\PageTestCase.
  */
 
 namespace TwoDotsTwice\Selenium\Page;
 
 /**
- * Class PageTestCaseTrait
+ * Trait PageTestCase
  *
  * Should only be used on \PHPUnit_Extensions_Selenium2TestCase classes.
  *
  * @package TwoDotsTwice\Selenium\Page
  */
-trait PageTestCaseTrait
+trait PageTestCase
 {
     /**
      * Waits until a page has been loaded.
