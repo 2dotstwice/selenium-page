@@ -10,6 +10,7 @@ namespace TwoDotsTwice\Selenium\Page;
 use Sauce\Sausage\WebDriverTestCase;
 
 use TwoDotsTwice\Selenium\Page\GitHub\BlogPage;
+use TwoDotsTwice\Selenium\Page\GitHub\RepositoryPage;
 
 /**
  * Class PageTest
@@ -40,11 +41,19 @@ class PageTest extends WebDriverTestCase
     protected $blogPage;
 
     /**
+     * GitHub repository page.
+     *
+     * @var RepositoryPage
+     */
+    protected $repositoryPage;
+
+    /**
      * {@inheritdoc}
      */
     public function setUpPage()
     {
         $this->blogPage = new BlogPage($this);
+        $this->repositoryPage = new RepositoryPage($this);
     }
 
     /**
@@ -52,7 +61,21 @@ class PageTest extends WebDriverTestCase
      */
     public function testPageNavigation()
     {
+        $timeout = 30000;
+
+        // Go to a page with a fixed path.
         $this->blogPage->go();
-        $this->blogPage->waitUntilLoaded(30000);
+        $this->blogPage->waitUntilLoaded($timeout);
+
+        // Reload the page with a fixed path.
+        $this->blogPage->reload();
+        $this->blogPage->waitUntilLoaded($timeout);
+
+        // Go to a page with a dynamic path.
+        $this->repositoryPage->go(array(
+            '%account' => '2dotstwice',
+            '%repository' => 'selenium-page',
+        ));
+        $this->repositoryPage->waitUntilLoaded($timeout);
     }
 }
