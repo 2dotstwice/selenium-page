@@ -9,6 +9,8 @@ namespace TwoDotsTwice\Selenium\Page;
 
 use Sauce\Sausage\WebDriverTestCase;
 
+use TwoDotsTwice\Selenium\Page\GitHub\BlogPage;
+
 /**
  * Class PageTest
  * @package TwoDotsTwice\Selenium\Page
@@ -31,10 +33,18 @@ class PageTest extends WebDriverTestCase
     );
 
     /**
+     * GitHub blog page.
+     *
+     * @var BlogPage
+     */
+    protected $blogPage;
+
+    /**
      * {@inheritdoc}
      */
     public function setUpPage()
     {
+        $this->blogPage = new BlogPage($this);
     }
 
     /**
@@ -42,5 +52,7 @@ class PageTest extends WebDriverTestCase
      */
     public function testPageNavigation()
     {
+        $this->blogPage->go();
+        $this->blogPage->waitUntilLoaded(30000);
     }
 }
