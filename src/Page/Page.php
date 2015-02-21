@@ -97,8 +97,11 @@ abstract class Page
         }
 
         // Wait until the new body element is present and store it in case the page is reloaded in the future.
-        $criteria = $this->testCase->using('xpath')->value('//body');
-        $this->body = Element::waitUntilFound($this->testCase, $criteria, $timeout);
+        $testCase = $this->testCase;
+        $this->body = $this->testCase->waitUntil(function () use ($testCase) {
+            $criteria = $testCase->using('xpath')->value('//body');
+            return Element::find($testCase, $criteria);
+        }, $timeout);
     }
 
     /**
