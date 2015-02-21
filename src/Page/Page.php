@@ -25,9 +25,9 @@ abstract class Page
     protected $testCase;
 
     /**
-     * Page url object which contains a base url and path.
+     * Page url object.
      *
-     * @var PageUrlInterface
+     * @var PageUrl
      */
     protected $url;
 
@@ -43,10 +43,10 @@ abstract class Page
      *
      * @param \PHPUnit_Extensions_Selenium2TestCase $testCase
      *   Selenium 2 test case required to interact with the browser.
-     * @param PageUrlInterface $url
+     * @param PageUrl $url
      *   Page url.
      */
-    public function __construct(\PHPUnit_Extensions_Selenium2TestCase $testCase, PageUrlInterface $url)
+    public function __construct(\PHPUnit_Extensions_Selenium2TestCase $testCase, PageUrl $url)
     {
         $this->testCase = $testCase;
         $this->url = $url;
@@ -54,11 +54,22 @@ abstract class Page
 
     /**
      * Navigates to the page.
+     *
+     * @param array $arguments
+     *   Path arguments to pass to the PageUrl object before constructing the absolute url.
      */
-    public function go()
+    public function go($arguments = array())
     {
-        $url = $this->url->getAbsoluteUrl();
-        $this->testCase->url($url);
+        $this->url->setPathArguments($arguments);
+        $this->testCase->url((string) $this->url);
+    }
+
+    /**
+     * Reloads the page.
+     */
+    public function reload()
+    {
+        $this->go($this->url->getPathArguments());
     }
 
     /**

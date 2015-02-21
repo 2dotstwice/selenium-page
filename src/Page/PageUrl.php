@@ -11,7 +11,7 @@ namespace TwoDotsTwice\Selenium\Page;
  * Class PageUrl
  * @package TwoDotsTwice\Selenium\Page\PageUrl
  */
-abstract class PageUrl implements PageUrlInterface
+abstract class PageUrl
 {
     /**
      * Base url.
@@ -26,10 +26,18 @@ abstract class PageUrl implements PageUrlInterface
      * Path.
      *
      * Should not start or end with a slash.
+     * May contain placeholders for path arguments. Each placeholder should start with a %.
      *
      * @var string
      */
     protected $path;
+
+    /**
+     * Path arguments, keyed by their placeholder (including the %).
+     *
+     * @var string[]
+     */
+    protected $pathArguments = array();
 
     /**
      * Constructs a new PageUrl object.
@@ -83,10 +91,67 @@ abstract class PageUrl implements PageUrlInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Sets the path arguments used to replace the placeholders in the path.
+     *
+     * @param string[] $arguments
+     *   Path arguments, keyed by their placeholder (starting with a %).
      */
-    public function getAbsoluteUrl()
+    public function setPathArguments($arguments)
     {
-        return $this->getBaseUrl() . $this->getPath();
+        if (is_array($arguments)) {
+            // Make sure each argument's placeholder starts with a %.
+            foreach ($arguments as $placeholder => $argument) {
+                if (substr($placeholder, 0, 1) !== '%') {
+                    unset($arguments[$placeholder]);
+                    $arguments['%' . $placeholder] = $argument;
+                }
+            }
+            $this->pathArguments = $arguments;
+        }
+    }
+
+    /**
+     * Returns the path arguments.
+     *
+     * @return string[]
+     *   Path arguments, keyed by their placeholder (starting with a %).
+     */
+    public function getPathArguments()
+    {
+        return $this->pathArguments;
+    }
+
+    /**
+     * Returns the path, in which any placeholders are replaced with the corresponding arguments.
+     *
+     * @return string
+     *   Path with arguments instead of placeholders.
+     */
+    public function getPathWithArguments()
+    {
+        $path = $this->getPath();
+        foreach ($this->getPathArguments() as $placeholder => $argument) {
+            $path = str_replace($placeholder, $argument, $path);
+        }
+        return $path;
+    }
+
+    /**
+     * Returns the complete url, including path arguments.
+     *
+     * @return string
+     *   Complete url, including path arguments.
+     */
+    public function getUrl()
+    {
+        return $this->getBaseUrl() . $this->getPathWithArguments();
+    }
+
+    /**
+     * Converts the object to a string, returning the complete url.
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
     }
 }
