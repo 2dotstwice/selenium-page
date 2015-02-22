@@ -14,35 +14,18 @@ namespace TwoDotsTwice\Selenium\Element;
 class Element extends \PHPUnit_Extensions_Selenium2TestCase_Element
 {
     /**
-     * Converts a \PHPUnit_Extensions_Selenium2TestCase_Element object to the same type as the current class.
-     *
-     * Inspired by http://stackoverflow.com/a/9812059.
+     * Converts any \PHPUnit_Extensions_Selenium2TestCase_Element object to the same type as the current class.
      *
      * @param \PHPUnit_Extensions_Selenium2TestCase_Element $source
      *   Existing \PHPUnit_Extensions_Selenium2TestCase_Element object.
      *
-     * @return Element
-     *   Element object.
+     * @return self
+     *   Element object of the class used to call this method.
      */
     public static function from(\PHPUnit_Extensions_Selenium2TestCase_Element $source)
     {
-        // The driver and url properties that we need from the $source object are protected and inaccessible for us
-        // here. To get around this we retrieve the property values using a ReflectionObject which can read any
-        // properties.
-        $sourceReflection = new \ReflectionObject($source);
-
-        // Get the driver property.
-        $driverProperty = $sourceReflection->getProperty('driver');
-        $driverProperty->setAccessible(true);
-        $driver = $driverProperty->getValue($source);
-
-        // Get the url property.
-        $urlProperty = $sourceReflection->getProperty('url');
-        $urlProperty->setAccessible(true);
-        $url = $urlProperty->getValue($source);
-
-        // Instantiate a new object of the current class using the variables we got from the source object.
-        return new self($driver, $url);
+        // Instantiate a new object of the current class using the arguments we got from the source object.
+        return new self($source->driver, $source->url);
     }
 
     /**
@@ -90,7 +73,7 @@ class Element extends \PHPUnit_Extensions_Selenium2TestCase_Element
      * @param \PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria
      *   Element access criteria.
      *
-     * @return Element|null
+     * @return self|null
      *   Either an Element object, or null if the element was not found.
      */
     public static function find($accessor, \PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
@@ -111,7 +94,7 @@ class Element extends \PHPUnit_Extensions_Selenium2TestCase_Element
      * @param \PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria
      *   Element access criteria.
      *
-     * @return Element[]
+     * @return self[]
      *   All elements matching the criteria inside the accessor.
      */
     public static function findAll($accessor, \PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
